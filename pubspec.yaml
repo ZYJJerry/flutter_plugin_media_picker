@@ -1,0 +1,41 @@
+name: flutter_plugin_media_picker
+description: A new Flutter project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=2.13.0 <3.0.0'
+  flutter: '>=2.2.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  photo_gallery:
+    path: flutter_photo_gallery # 图片和视频选择基于这个项目
+  image_picker: # 拍照和拍视频基于这个项目
+    path: image_picker
+  transparent_image: ^2.0.0 #透明占位图片
+  common_utils: ^2.0.2
+  permission_handler: ^9.2.0
+  image_gallery_saver:
+    path: flutter_image_gallery_saver
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.babytree.flutter_plugin_media_picker
+        pluginClass: FlutterPluginMediaPickerPlugin
+      ios:
+        pluginClass: FlutterPluginMediaPickerPlugin
+
+  assets:
+    - assets/images/

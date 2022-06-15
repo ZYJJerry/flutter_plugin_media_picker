@@ -1,0 +1,62 @@
+group 'com.morbit.photogallery'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.5.31'
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/releases' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+        maven { url "https://jitpack.io" }
+
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-release' }
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-snapshot' }
+
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/releases' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+        maven { url "https://jitpack.io" }
+
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-release' }
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-snapshot' }
+
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 31
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        minSdkVersion 21
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+}

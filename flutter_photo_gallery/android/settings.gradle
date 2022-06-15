@@ -1,0 +1,3 @@
+package photo_gallery.android
+
+rootProject.name = 'photo_gallery'

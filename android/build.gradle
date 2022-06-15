@@ -1,0 +1,59 @@
+group 'com.babytree.flutter_plugin_media_picker'
+version '1.0'
+
+buildscript {
+    ext.kotlin_version = '1.5.31'
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/releases' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+        maven { url "https://jitpack.io" }
+
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-release' }
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-snapshot' }
+
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/releases' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+        maven { url "https://jitpack.io" }
+
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-release' }
+        maven { url 'http://nexus.babytree-inc.com:8081/nexus/content/repositories/beijing-maven-snapshot' }
+
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+}

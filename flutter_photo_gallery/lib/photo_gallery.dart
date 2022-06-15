@@ -1,0 +1,144 @@
+library photogallery;
+
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:photo_gallery/src/common/photo_gallery_file.dart';
+
+part 'src/common/medium_type.dart';
+part 'src/image_providers/album_thumbnail_provider.dart';
+part 'src/image_providers/photo_provider.dart';
+part 'src/image_providers/thumbnail_provider.dart';
+part 'src/models/album.dart';
+part 'src/models/media_page.dart';
+part 'src/models/medium.dart';
+
+/// Accessing the native photo gallery.
+class PhotoGallery {
+  static const MethodChannel _channel = const MethodChannel('photo_gallery');
+
+  /// List all available gallery albums and counts number of items of [MediumType].
+  static Future<List<Album>> listAlbums({
+    required MediumType mediumType,
+    bool? hideIfEmpty = true,
+  }) async {
+    final json = await _channel.invokeMethod('listAlbums', {
+      'mediumType': mediumTypeToJson(mediumType),
+      'hideIfEmpty': hideIfEmpty
+    });
+    return json.map<Album>((x) => Album.fromJson(x)).toList();
+  }
+
+  /// List all available media in a specific album, support pagination of media
+  static Future<MediaPage> _listMedia({
+    required Album album,
+    bool newest = true,
+    required int total,
+    int? skip,
+    int? take,
+  }) async {
+    final json = await _channel.invokeMethod('listMedia', {
+      'albumId': album.id,
+      'mediumType': mediumTypeToJson(album.mediumType),
+      'newest': newest,
+      'total': total,
+      'skip': skip,
+      'take': take,
+    });
+    return MediaPage.fromJson(album, json);
+  }
+
+  /// Get medium metadata by medium id
+  static Future<Medium> getMedium({
+    required String mediumId,
+    MediumType? mediumType,
+  }) async {
+    final json = await _channel.invokeMethod('getMedium', {
+      'mediumId': mediumId,
+      'mediumType': mediumTypeToJson(mediumType),
+    });
+    return Medium.fromJson(json);
+  }
+
+  /// Get medium thumbnail by medium id
+  static Future<List<int>> getThumbnail({
+    required String mediumId,
+    MediumType? mediumType,
+    int? width,
+    int? height,
+    bool? highQuality = false,
+  }) async {
+    final bytes = await _channel.invokeMethod('getThumbnail', {
+      'mediumId': mediumId,
+      'mediumType': mediumTypeToJson(mediumType),
+      'width': width,
+      'height': height,
+      'highQuality': highQuality,
+    });
+    if (bytes == null) throw "Failed to fetch thumbnail of medium $mediumId";
+    return new List<int>.from(bytes);
+  }
+
+  /// Get medium origin by medium id
+  static Future<List<int>> getOrigin({
+    required String mediumId,
+    MediumType? mediumType,
+    int? width,
+    int? height,
+    bool? highQuality = false,
+  }) async {
+    final bytes = await _channel.invokeMethod('getOrigin', {
+      'mediumId': mediumId,
+      'mediumType': mediumTypeToJson(mediumType),
+      'width': width,
+      'height': height,
+      'highQuality': highQuality,
+    });
+    if (bytes == null) throw "Failed to fetch origin of medium $mediumId";
+    return new List<int>.from(bytes);
+  }
+
+  /// Get album thumbnail by album id
+  static Future<List<int>> getAlbumThumbnail({
+    required String albumId,
+    MediumType? mediumType,
+    int? width,
+    int? height,
+    bool? highQuality = false,
+  }) async {
+    final bytes = await _channel.invokeMethod('getAlbumThumbnail', {
+      'albumId': albumId,
+      'mediumType': mediumTypeToJson(mediumType),
+      'width': width,
+      'height': height,
+      'highQuality': highQuality,
+    });
+    if (bytes == null) throw "Failed to fetch thumbnail of album $albumId";
+    return new List<int>.from(bytes);
+  }
+
+  /// get medium file by medium id
+  static Future<PhotoGalleryFile> getFile({
+    required String mediumId,
+    MediumType? mediumType,
+    String? mimeType,
+  }) async {
+    final map = await _channel.invokeMethod('getFile', {
+      'mediumId': mediumId,
+      'mediumType': mediumTypeToJson(mediumType),
+      'mimeType': mimeType,
+    });
+    if (map == null) throw "Cannot get file $mediumId with type $mimeType";
+    return PhotoGalleryFile(File(map['path']), orientation: map['orientation'], metaWidth: map['metaWidth'], metaHeight: map['metaHeight']);
+  }
+
+  static Future<void> cleanCache() async {
+    _channel.invokeMethod('cleanCache', {});
+  }
+}
