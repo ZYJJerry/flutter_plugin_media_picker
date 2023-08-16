@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/flutter_image_gallery_saver" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/permission_handler-9.2.0" />
+      <root url="file://$PROJECT_DIR$/flutter_photo_gallery" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$/image_picker" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/image_picker_for_web-2.2.0" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

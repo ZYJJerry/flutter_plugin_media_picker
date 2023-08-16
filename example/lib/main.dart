@@ -1,4 +1,3 @@
-//@dart=2.8
 
 import 'dart:io';
 
@@ -26,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   int crossAxisCount = 3;
   int videosCount = 4;
   int videoDuration = 10;
-  ValueNotifier<List<MediumInfo>> selectImages = ValueNotifier([]);
+  ListValueNotifier<MediumInfo> selectImages = ListValueNotifier([]);
   var selectVideos = [];
 
   @override
@@ -115,7 +114,7 @@ class _MyAppState extends State<MyApp> {
 
           });
         },
-        child: Image.memory(info.bytes, fit: BoxFit.cover,
+        child: Image.memory(info.bytes!, fit: BoxFit.cover,
           width: 100,
           height: 100,
         ),

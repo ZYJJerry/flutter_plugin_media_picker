@@ -122,18 +122,18 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
       });
       _handleCameraStatus();
     });
-    PaintingBinding.instance?.imageCache?.maximumSize = 2000; //图片缓存数量上限改成4000张
-    PaintingBinding.instance?.imageCache?.maximumSizeBytes =
+    PaintingBinding.instance.imageCache.maximumSize = 2000; //图片缓存数量上限改成4000张
+    PaintingBinding.instance.imageCache.maximumSizeBytes =
         500 * 1024 * 1024; //图片缓存大小上限改成1000M
   }
 
   @override
   void dispose() {
     super.dispose();
-    PaintingBinding.instance?.imageCache?.clear();
-    PaintingBinding.instance?.imageCache?.maximumSize =
+    PaintingBinding.instance.imageCache.clear();
+    PaintingBinding.instance.imageCache.maximumSize =
         1000; //图片缓存数量上限改成系统默认1000张
-    PaintingBinding.instance?.imageCache?.maximumSizeBytes =
+    PaintingBinding.instance.imageCache.maximumSizeBytes =
         100 * 1024 * 1024; //图片缓存大小上限改成系统默认100M
     PhotoGallery.cleanCache();
   }
@@ -214,8 +214,8 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
           child: DragContainer(
             key: _dragKey,
             drawer: getListView(),
-            defaultShowHeight: widget.defaultShowHeight,
-            height: widget.maxHeight,
+            defaultShowHeight: widget.defaultShowHeight ?? 0,
+            height: widget.maxHeight ?? 0,
             endScrollNotifier: endScrollValueNotifier,
           ),
         )
@@ -379,9 +379,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
   }
 
   Widget _buildContent() {
-    return OverscrollNotificationWidget(
-      child: _getGridView(),
-    );
+    return OverscrollNotificationWidget(child: _getGridView());
   }
 
   Widget _getGridView() {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_plugin_media_picker/media_picker.dart';
@@ -166,7 +168,6 @@ class _MediaItemWidgetState extends State<MediaItemWidget> {
         height: widget.thumbnailSize.width.toInt(),
         highQuality: true,
       );
-    // }
   }
 
   Widget _buildVideoDuration() {
